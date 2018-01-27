@@ -19,35 +19,14 @@
         android:paddingBottom="15dp"
         android:textColorHint="@color/colorAccent" />
 
-    <EditText
-        android:id="@+id/editTextPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:fontFamily="sans-serif"
-        android:hint="Passord"
-        android:inputType="textPassword"
-        android:paddingBottom="15dp"
-        android:textColorHint="@color/colorAccent" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/buttonLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-
-            android:text="Logg inn"
-            android:textAllCaps="false"
-            android:textColor="@color/colorAccent" />
 
         <Button
-            android:id="@+id/buttonSignup"
+            android:id="@+id/buttonForgot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -56,16 +35,7 @@
             android:text="Registrer"
             android:textAllCaps="false"
             android:textColor="@color/colorAccent" />
-        <Button
-            android:id="@+id/buttonForgot"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
 
-            android:text="Glemt passord?"
-            android:textAllCaps="false"
-            android:textColor="@color/colorAccent" />
     </LinearLayout>
 
     <ProgressBar

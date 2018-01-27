@@ -42,7 +42,7 @@ public class main extends AppCompatActivity implements View.OnClickListener{
         findViewById(R.id.buttonLogin).setOnClickListener(this);
         findViewById(R.id.buttonForgot).setOnClickListener(this);
     }
-}
+
 
     private void userLogin() {
         String email = editTextEmail.getText().toString().trim();
@@ -116,3 +116,4 @@ public class main extends AppCompatActivity implements View.OnClickListener{
 
         }
     }
+}

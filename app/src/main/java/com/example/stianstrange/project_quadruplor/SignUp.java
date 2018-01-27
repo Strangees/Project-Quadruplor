@@ -22,6 +22,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +40,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
+        setContentView(R.layout.activity_signup);
 
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
@@ -46,8 +48,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         mAuth = FirebaseAuth.getInstance();
 
 
-        findViewById(R.id.buttonSignUp).setOnClickListener(this);
-        findViewById(R.id.textViewLogin).setOnClickListener(this);
+        findViewById(R.id.buttonRegister).setOnClickListener(this);
     }
 
 
@@ -92,10 +93,11 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 progressBar.setVisibility(View.GONE);
                 if (task.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), "Registering user", Toast.LENGTH_SHORT).show();
+                    FirestoreAddData();
                     finish();
-                    startActivity(new Intent(SignUpActivity.this, MainActivity.class));
+                    startActivity(new Intent(SignUp.this, main.class));
                     Toast.makeText(getApplicationContext(), "User registered", Toast.LENGTH_SHORT).show();
-                    AddFirestoreUser();
 
                 } else {
 
@@ -112,21 +114,42 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
     }
 
+    public void FirestoreAddData(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Map<String, Object> user = new HashMap<>();
+        String email = editTextEmail.getText().toString().trim();
+        String Uid = mAuth.getCurrentUser().getUid().toString();
+        user.put("Email", email);
+        user.put("Org","null");
+        user.put("UserID",Uid);
+
+
+// Add a new document with a generated ID
+        db.collection("users")
+                .add(user)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        String FS = "Firestoredata";
+                        Log.d(FS, "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        String FS = "Firestoredata";
+                        Log.w(FS, "Error adding document", e);
+                    }
+                });
+
+    }
+
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.buttonSignUp:
                 registerUser();
-                break;
-
-            case R.id.textViewLogin:
-                finish();
-                startActivity(new Intent(this, MainActivity.class));
-                break;
         }
-    }
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, main.class));
     }
 }
