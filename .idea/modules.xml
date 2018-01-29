@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AndroidStudio.iml" filepath="$PROJECT_DIR$/AndroidStudio.iml" />
+      <module fileurl="file://E:\Project-Quadruplor-master\Project-Quadruplor-master\Project-Quadruplor-master\Project-Quadruplor\AndroidStudio.iml" filepath="E:\Project-Quadruplor-master\Project-Quadruplor-master\Project-Quadruplor-master\Project-Quadruplor\AndroidStudio.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Project-Quadruplor.iml" filepath="$PROJECT_DIR$/Project-Quadruplor.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://E:\Project-Quadruplor-master\Project-Quadruplor-master\Project-Quadruplor-master\Project-Quadruplor\app\app.iml" filepath="E:\Project-Quadruplor-master\Project-Quadruplor-master\Project-Quadruplor-master\Project-Quadruplor\app\app.iml" />
     </modules>
   </component>
 </project>
