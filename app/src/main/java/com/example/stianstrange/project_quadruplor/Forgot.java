@@ -28,8 +28,8 @@ public class Forgot extends AppCompatActivity implements View.OnClickListener {
 
         //Initialize FireBase Instance
         mAuth = FirebaseAuth.getInstance();
-        editTextEmail = (EditText) findViewById(R.id.editTextEmail);
-        progressBar = (ProgressBar) findViewById(R.id.progressbar);
+        editTextEmail = findViewById(R.id.editTextEmail);
+        progressBar = findViewById(R.id.progressbar);
 
         findViewById(R.id.buttonForgot).setOnClickListener(this);
 
