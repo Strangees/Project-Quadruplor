@@ -86,7 +86,7 @@ public class main extends AppCompatActivity implements View.OnClickListener{
                 progressBar.setVisibility(View.GONE);
                 if (task.isSuccessful()) {
 
-                    startActivity(new Intent(main.this, Chat.class));
+                    startActivity(new Intent(main.this, Content.class));
                     Toast.makeText(getApplicationContext(), "Logged in", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {

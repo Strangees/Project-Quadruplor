@@ -1,5 +1,6 @@
 package com.example.stianstrange.project_quadruplor;
 
+import android.app.LauncherActivity;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,7 +49,6 @@ import java.util.Map;
 import java.util.Calendar;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 
-import static com.gjiazhe.layoutswitch.ItemAdapter.SPAN_COUNT_ONE;
 
 /**
  * Created by stian.strange on 27.01.2018.
@@ -59,8 +60,9 @@ public class Content extends AppCompatActivity implements View.OnClickListener{
     TextView ChatView;
     EditText ChatSend;
     ProgressBar progressBar;
+    LinearLayoutManager mLinearLayoutManager;
+    List<String> messagesList;
     RecyclerView recyclerView;
-
 
 
 
@@ -77,15 +79,31 @@ public class Content extends AppCompatActivity implements View.OnClickListener{
 
         ChatSend = findViewById(R.id.ChatSend);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        mLinearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        List<String> messagesarraylist = new ArrayList<>();
+
+
+        MessageAdapter adapter = new MessageAdapter(this, messagesarraylist) {
+            @Override
+            public int getItemCount() {
+                return 0;
+            }
+        };
+        recyclerView.setAdapter(adapter);
+
+
 
         //On click listener
         findViewById(R.id.buttonSend).setOnClickListener(this);
-
-
         progressBar.setVisibility(View.GONE);
         recievetextlive();
     }
+
+
 
 
     private void sendtext(){
@@ -126,7 +144,7 @@ public class Content extends AppCompatActivity implements View.OnClickListener{
 
     }
 
-    private void recievetextlive() {
+    public void recievetextlive() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         final String TAG = "FIREBASE RECIEVE";
         db.collection("message")
@@ -142,21 +160,20 @@ public class Content extends AppCompatActivity implements View.OnClickListener{
                             return;
                         }
 
-                        List<String> message = new ArrayList<String>();
+                        List<String> messagesarraylist = new ArrayList<>();
                         for (DocumentSnapshot doc : info) {
                             if (doc.get("Group") != null) {
-                                message.add(doc.getString("Message"));
+                                messagesarraylist.add(doc.getString("Message"));
+
+                                startActivity(MessageAdapter);
 
                             }
                         }
-                        Log.d(TAG, "Messages: " + message);
+                        Log.d(TAG, "Messages: " + messagesarraylist);
 
                     }
                 });
-    }
-
-
-
+            }
 
 //    private void recievetextsingletime() {
 //       FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -186,5 +203,6 @@ public class Content extends AppCompatActivity implements View.OnClickListener{
 
     }
 }
+
 
 
