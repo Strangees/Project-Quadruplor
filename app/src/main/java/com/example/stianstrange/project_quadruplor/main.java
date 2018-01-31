@@ -34,9 +34,9 @@ public class main extends AppCompatActivity implements View.OnClickListener{
 
         //Initialize FireBase Instance
         mAuth = FirebaseAuth.getInstance();
-        editTextEmail = findViewById(R.id.editTextEmail);
-        editTextPassword = findViewById(R.id.editTextPassword);
-        progressBar = findViewById(R.id.progressbar);
+        editTextEmail = (EditText) findViewById(R.id.editTextEmail);
+        editTextPassword = (EditText) findViewById(R.id.editTextPassword);
+        progressBar = (ProgressBar) findViewById(R.id.progressbar);
 
         findViewById(R.id.buttonSignup).setOnClickListener(this);
         findViewById(R.id.buttonLogin).setOnClickListener(this);
@@ -85,10 +85,10 @@ public class main extends AppCompatActivity implements View.OnClickListener{
             public void onComplete(@NonNull Task<AuthResult> task) {
                 progressBar.setVisibility(View.GONE);
                 if (task.isSuccessful()) {
-                    finish();
-                    startActivity(new Intent(main.this, Content.class));
-                    Toast.makeText(getApplicationContext(), "Logged in", Toast.LENGTH_SHORT).show();
 
+                    startActivity(new Intent(main.this, Chat.class));
+                    Toast.makeText(getApplicationContext(), "Logged in", Toast.LENGTH_SHORT).show();
+                    finish();
                 } else {
                     Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }

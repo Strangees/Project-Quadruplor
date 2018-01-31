@@ -13,6 +13,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+import android.system.Os;
+import java.util.Calendar;
+
+
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -119,16 +123,27 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         Map<String, Object> user = new HashMap<>();
         String email = editTextEmail.getText().toString().trim();
         String Uid = mAuth.getCurrentUser().getUid().toString();
+        String CT = Calendar.getInstance().getTime().toString();
         user.put("Email", email);
         user.put("Org","null");
         user.put("UserID",Uid);
+        user.put("Employee","TRUE");
+        user.put("Leader","FALSE");
+        user.put("Timestamp",CT);
+        user.put("ProfilePictureURI","null");
+        user.put("Admin","FALSE");
+
+        // Add new document with uid as document number and user.put info
+        db.collection("users").document(Uid).set(user);
+
 
 
 // Add a new document with a generated ID
-        db.collection("users")
-                .add(user)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
+
+
+
+        //db.collection("users").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    /*@Override
                     public void onSuccess(DocumentReference documentReference) {
                         String FS = "Firestoredata";
                         Log.d(FS, "DocumentSnapshot added with ID: " + documentReference.getId());
@@ -139,10 +154,10 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                     public void onFailure(@NonNull Exception e) {
                         String FS = "Firestoredata";
                         Log.w(FS, "Error adding document", e);
-                    }
-                });
+                    }*/
+                }
 
-    }
+
 
     @Override
     public void onClick(View view) {
