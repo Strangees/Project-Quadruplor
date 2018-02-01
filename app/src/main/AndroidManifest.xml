@@ -21,6 +21,7 @@
         <activity android:name=".SignUp" />
         <activity android:name=".Forgot" />
         <activity android:name=".Content" />
+        <activity android:name=".cardview" />
     </application>
 
 </manifest>
