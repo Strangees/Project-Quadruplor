@@ -5,32 +5,31 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
 
-public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder> {
+public class RVAdaptermessage extends RecyclerView.Adapter<RVAdaptermessage.PersonViewHolder> {
 
     public static class PersonViewHolder extends RecyclerView.ViewHolder {
 
         CardView cv;
-        TextView personName;
+        TextView messagecontenttextview;
         TextView personAge;
 
         PersonViewHolder(View itemView) {
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cv);
-            personName = (TextView)itemView.findViewById(R.id.person_name);
+            messagecontenttextview = (TextView)itemView.findViewById(R.id.person_name);
             personAge = (TextView)itemView.findViewById(R.id.person_age);
         }
     }
 
-    List<Person> persons;
+    List<Message> messages;
 
-    RVAdapter(List<Person> persons) {
-        this.persons = persons;
+    RVAdaptermessage(List<Message> messages) {this.messages = messages;
     }
+
 
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
@@ -46,12 +45,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder> 
 
     @Override
     public void onBindViewHolder(PersonViewHolder personViewHolder, int i) {
-        personViewHolder.personName.setText(persons.get(i).name);
-        personViewHolder.personAge.setText(persons.get(i).age);
+        personViewHolder.messagecontenttextview.setText(messages.get(i).messagecontent);
     }
 
     @Override
     public int getItemCount() {
-        return persons.size();
+        return messages.size();
     }
 }

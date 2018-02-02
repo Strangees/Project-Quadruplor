@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.telephony.SmsMessage;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -39,21 +40,57 @@ public class Content extends Activity implements View.OnClickListener{
     FirebaseAuth mAuth;
     EditText ChatSend;
     private List<Person> persons;
+  //  public List<String> messages;
+    //public List<char[]> MessageInfo;
     private RecyclerView mRecyclerView;
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.recyclerview_activity);
 
-            mRecyclerView= findViewById(R.id.rv);
+            mRecyclerView = findViewById(R.id.rv);
             LinearLayoutManager llm = new LinearLayoutManager(this);
             mRecyclerView.setLayoutManager(llm);
             mRecyclerView.setHasFixedSize(true);
             mAuth = FirebaseAuth.getInstance();
-            initializeData();
-            initializeAdapter();
             recievetextlive();
+            //initializeData();
+            // initializeAdapter();
+            //initializeAdaptermessage();
+            //initializeDataMessage();
         }
+    private void recievetextlive() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final String TAG = "FIREBASE RECIEVE";
+        db.collection("message")
+                .whereEqualTo("Group", "support")
+                .orderBy("Timestamp", Query.Direction.DESCENDING)
+                .limit(50)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent
+
+                            (@Nullable QuerySnapshot value,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w(TAG, "Listen failed.", e);
+                            return;
+                        }
+
+                        final List<String> messages = new ArrayList<>();
+                        for (DocumentSnapshot doc : value) {
+                            if (doc.get("Message") != null) {
+                                messages.add(doc.getString("Message"));
+                               // messages.add(String.valueOf(new Message(doc.getString("Message"))));
+
+                            }
+                        }
+                        Log.d(TAG, "Current messages in document" + messages);
+
+                        initializeAdaptermessage();
+                    }
+                });
+    }
 
         private void initializeData(){
             persons = new ArrayList<>();
@@ -87,18 +124,24 @@ public class Content extends Activity implements View.OnClickListener{
             persons.add(new Person("Emma Wilson", "23 years old"));
             persons.add(new Person("Lavery Maiss", "25 years old"));
             persons.add(new Person("Lillie Watts", "35 years old"));
-
-
-
-
         }
 
-        private void initializeAdapter(){
-            RVAdapter adapter = new RVAdapter(persons);
-            mRecyclerView.setAdapter(adapter);
-        }
+       private void initializeAdapter(){
+          //RVAdapter adapter = new RVAdapter(persons);
+         // RVAdaptermessage adapter = new RVAdaptermessage(persons);
+         //mRecyclerView.setAdapter(adapter);
+
+       }
 
 
+       public void initializeAdaptermessage() {
+           // recievetextlive();
+           //   messages.add(new Message("hei hei"));
+           RVAdapter adapter = new RVAdapter(Message);
+           mRecyclerView.setAdapter(adapter);
+
+
+       }
     private void sendtext(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Map<String, Object> message = new HashMap<>();
@@ -136,66 +179,6 @@ public class Content extends Activity implements View.OnClickListener{
                 });
 
     }
-
-    public void recievetextlive() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        final String TAG = "FIREBASE RECIEVE";
-        db.collection("message")
-                .whereEqualTo("Group", "support")
-                .orderBy("Timestamp", Query.Direction.DESCENDING)
-                .limit(50)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot info,
-                                        @Nullable FirebaseFirestoreException e) {
-                        if (e != null) {
-                            Log.w(TAG, "Listen failed.", e);
-                            return;
-                        }
-                        List<String> messages = new ArrayList<>();
-                        for (DocumentSnapshot doc : info) {
-                            if (doc.get("Group") != null) {
-
-                                messages.add(doc.getString("Message"));
-                                messages.toArray();
-                  //              messages = new ArrayList<>();
-
-
-                            }
-                        }
-                        Log.d(TAG, "Messages: " + messages);
-
-                        //messagesarraylist.toArray(new List[]{productList});
-
-
-
-                    }
-                });
-            }
-
-
-
-
-//    private void recievetextsingletime() {
-//       FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        db.collection("message").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
-//        {
-//            String TAG = "FIREBASE RECIEVE";
-//            String textrecieve = ChatView.getText().toString().trim();
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful()) {
-//                            for (DocumentSnapshot document : task.getResult()) {
-//                                Log.d(TAG, document.getId() + " => " + document.getData().toString());
-//                                //recycler();
-//                            }
-//                        } else {
-//                            Log.d(TAG, "Error getting documents: ", task.getException());
-//                        }
-//                    }
-//                });
-//
-//    }
 
 
 
