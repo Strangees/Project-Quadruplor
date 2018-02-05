@@ -7,29 +7,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+
 import java.util.List;
+public class RVAdaptermessage extends RecyclerView.Adapter<RVAdaptermessage.MessageViewHolder> {
 
-public class RVAdaptermessage extends RecyclerView.Adapter<RVAdaptermessage.PersonViewHolder> {
-
-    public static class PersonViewHolder extends RecyclerView.ViewHolder {
+    public static class MessageViewHolder extends RecyclerView.ViewHolder {
 
         CardView cv;
-        TextView messagecontenttextview;
-        TextView personAge;
+        TextView messagecontent;
 
-        PersonViewHolder(View itemView) {
+        MessageViewHolder(View itemView) {
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cv);
-            messagecontenttextview = (TextView)itemView.findViewById(R.id.person_name);
-            personAge = (TextView)itemView.findViewById(R.id.person_age);
+            messagecontent = (TextView)itemView.findViewById(R.id.messagecontent);
         }
     }
+        List<MES> messages;
+        RVAdaptermessage(List<MES> messages) {
+      this.messages = messages;}
 
-    List<Message> messages;
 
-    RVAdaptermessage(List<Message> messages) {this.messages = messages;
-    }
-
+//     List<MES> messages;
+//
+//     public RVAdaptermessage(List<MES> messages) {
+//        this.messages = messages;
+//    }
 
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
@@ -37,15 +39,16 @@ public class RVAdaptermessage extends RecyclerView.Adapter<RVAdaptermessage.Pers
     }
 
     @Override
-    public PersonViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public MessageViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item, viewGroup, false);
-        PersonViewHolder pvh = new PersonViewHolder(v);
+        MessageViewHolder pvh = new MessageViewHolder(v);
         return pvh;
     }
 
     @Override
-    public void onBindViewHolder(PersonViewHolder personViewHolder, int i) {
-        personViewHolder.messagecontenttextview.setText(messages.get(i).messagecontent);
+    public void onBindViewHolder(MessageViewHolder messageViewHolder, int position) {
+        messageViewHolder.messagecontent.setText(messages.get(position).messagecontent);
+
     }
 
     @Override

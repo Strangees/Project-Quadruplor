@@ -4,11 +4,11 @@ package com.example.stianstrange.project_quadruplor;
  * Created by stian on 01.02.2018.
  */
 
-public class Message {
+public class MES {
     String messagecontent;
 
 
-    Message(String messagecontent) {
+    MES(String messagecontent) {
 
         this.messagecontent = messagecontent;
     }
